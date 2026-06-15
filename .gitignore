@@ -1,0 +1,33 @@
+node_modules/
+
+# Vite / build outputs
+dist/
+build/
+.vite/
+
+# Environment
+.env
+.env.*
+
+# Logs
+npm-debug.log*
+.yarn-debug.log*
+.yarn-error.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDEs
+.vscode/
+.idea/
+
+# Misc
+coverage/
+.cache/
+*.tgz
+
+# Lock files (optional to track)
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml

@@ -1,0 +1,36 @@
+{
+  "name": "react-graphql",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "server": "node ./server/index.cjs",
+    "dev:full": "concurrently \"npm run server\" \"npm run dev\"",
+    "build": "vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@apollo/client": "^3.12.0",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6",
+    "react-graphql": "file:"
+  },
+  "devDependencies": {
+    "@apollo/server": "^5.0.0",
+    "@eslint/js": "^10.0.1",
+    "@rolldown/binding-win32-x64-msvc": "^1.0.3",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.1",
+    "concurrently": "^9.2.1",
+    "eslint": "^10.3.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-refresh": "^0.5.2",
+    "globals": "^17.6.0",
+    "graphql": "^16.11.0",
+    "uuid": "^13.0.0",
+    "vite": "^8.0.12"
+  }
+}
