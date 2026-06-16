@@ -55,11 +55,12 @@ body {
 }
 
 #root {
-  width: 1126px;
+  /* stretch the app to full viewport width while keeping content centered */
+  width: 100%;
   max-width: 100%;
-  margin: 0 auto;
+  margin: 0;
+  padding: 12px 18px;
   text-align: center;
-  border-inline: 1px solid var(--border);
   min-height: 100svh;
   display: flex;
   flex-direction: column;
@@ -120,6 +121,44 @@ code {
   max-width: 720px;
   margin: 12px auto;
   text-align: left;
+}
+
+/* App layout helpers */
+.app-container {
+  padding: 20px 16px;
+  /* allow wider content while keeping comfortable measure */
+  max-width: 1126px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 12px auto;
+}
+
+.app-title {
+  margin: 0;
+  font-size: 28px;
+  color: var(--text-h);
+}
+
+/* make person rows clearer and more touch-friendly */
+.person-item {
+  padding: 12px 8px;
+  border-bottom: 1px dashed var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.persons-list .meta {
+  color: var(--text);
+  font-size: 14px;
 }
 
 .form-row {

@@ -1,6 +1,9 @@
 const { GraphQLError } = require("graphql");
 const { randomUUID } = require("node:crypto");
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
 const Person = require("./models/person.cjs");
+const User = require("./models/user.cjs");
 
 const resolvers = {
   Query: {
@@ -23,6 +26,51 @@ const resolvers = {
     },
   },
   Mutation: {
+    createUser: async (root, args) => {
+      if (!args.password || args.password.length < 6) {
+        throw new GraphQLError('Password must be at least 6 characters long', {
+          extensions: { code: 'BAD_USER_INPUT', invalidArgs: 'password' }
+        })
+      }
+
+      const saltRounds = 10
+      const passwordHash = await bcrypt.hash(args.password, saltRounds)
+
+      const user = new User({ username: args.username, passwordHash })
+
+      return user.save().catch((error) => {
+        throw new GraphQLError(`Creating the user failed: ${error.message}`, {
+          extensions: {
+            code: "BAD_USER_INPUT",
+            invalidArgs: args.username,
+            error,
+          },
+        });
+      });
+    },
+
+    login: async (root, args) => {
+      const user = await User.findOne({ username: args.username });
+
+      const passwordCorrect = user === null
+        ? false
+        : await bcrypt.compare(args.password, user.passwordHash)
+
+      if (!user || !passwordCorrect) {
+        throw new GraphQLError("wrong credentials", {
+          extensions: {
+            code: "BAD_USER_INPUT",
+          },
+        });
+      }
+
+      const userForToken = {
+        username: user.username,
+        id: user._id,
+      };
+
+      return { value: jwt.sign(userForToken, process.env.JWT_SECRET) };
+    },
     addPerson: async (root, args, context) => {
       const currentUser = context.currentUser;
 

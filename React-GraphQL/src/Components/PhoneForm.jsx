@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useMutation } from '@apollo/client/react'
+import { useMutation } from '@apollo/client'
 import { EDIT_NUMBER } from '../queries'
 
 const PhoneForm = ({ setError }) => {
@@ -7,18 +7,22 @@ const PhoneForm = ({ setError }) => {
   const [phone, setPhone] = useState('')
 
   const [ changeNumber ] = useMutation(EDIT_NUMBER, {
+    // If the mutation returns null, the target person didn't exist
     onCompleted: (data) => {
-        if(!data.editNumber)
-        {
-            setError('person not found')
-        }
+      if (!data.editNumber) {
+        setError('person not found')
+      }
     }
   })
 
-  const submit = (event) => {
+  const submit = async (event) => {
     event.preventDefault()
 
-    changeNumber({ variables: { name, phone } })
+    try {
+      await changeNumber({ variables: { name, phone } })
+    } catch (error) {
+      setError(error.message)
+    }
 
     setName('')
     setPhone('')
